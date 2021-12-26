@@ -109,8 +109,8 @@ public class MJuego {
                 mj2.setFilas(fila);
                 mj2.setColumnas(columna);
                 this.jugador2.getMovimientos().add(mj2);
-                this.actualizarTablero(fila, columna, mj2.getSimbolo());
-            } else {
+                //this.actualizarTablero(fila, columna, mj2.getSimbolo());
+            } else if(this.jugador2.getNombre()!= "PC") {
                 Movimiento mj2 = new Movimiento();
                 mj2.setSimbolo('O');
                 mj2.setFilas(fila);
@@ -123,6 +123,16 @@ public class MJuego {
         definirGanador();
         finalizarMovimiento();
     }
+    /*
+    public void realizarMovimientoPC() {
+        Movimiento mj2 = new Movimiento();
+        this.movimientoPC();
+        mj2.setSimbolo('O');
+        mj2.setFilas(fila);
+        mj2.setColumnas(columna);
+        this.jugador2.getMovimientos().add(mj2);
+        this.actualizarTablero(fila, columna, mj2.getSimbolo());
+    }*/
 
     public void movimientoPC() {
         int fila, columna;
@@ -135,30 +145,31 @@ public class MJuego {
             do {
                 columna = (int) (Math.random() * (3 - 1 + 1) + 1);
             } while (columna < 1 || columna > 3);
+            columna--;
 
         } while (matriz[fila][columna] != this.simboloPorDefecto);
+        matriz[fila][columna] = 'O';
         this.fila = fila;
         this.columna = columna;
-        matriz[fila][columna] = 'O';
-
     }
 
     public void deshacerMovimiento(Jugador jugador) {
+        
     }
 
     public void finalizarMovimiento() {
         this.cambiarJugador();
     }
-
-    
+/*
     public void indicarTurno() {
         if (this.turno) {
             System.out.println("ES EL TURNO DE : " + this.jugador1.getNombre());
         } else {
             System.out.println("ES EL TURNO DE : " + this.jugador2.getNombre());
         }
-    }
-    /*
+    }*/
+
+    
     public boolean indicarTurno() {
         if (this.turno) {
             System.out.println("ES EL TURNO DE : " + this.jugador1.getNombre());
@@ -166,8 +177,7 @@ public class MJuego {
             System.out.println("ES EL TURNO DE : " + this.jugador2.getNombre());
         }
         return turno;
-    }*/
-
+    }
     public char coincidenciaLinea() {
         char simbolo;
         boolean coincidencia;

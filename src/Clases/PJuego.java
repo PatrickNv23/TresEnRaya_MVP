@@ -20,7 +20,14 @@ public class PJuego {
         }
         mjuego.inicializarTablero();
         mjuego.crearTablero();
-        mantenerJuego();
+        //mantenerJuego();
+
+        if (mjuego.getJugador2().getNombre() == "PC") {
+            mantenerJuegoPC();
+        } else {
+            mantenerJuego();
+        }
+
         //vjuego.mostrarTablero(mjuego.inicializarTablero());
         //mantenerJuego();
     }
@@ -46,18 +53,32 @@ public class PJuego {
     public void mantenerJuego() {
         //int i = 0;
         do {
-            //i++;
-            //mjuego.crearTablero();
-            //vjuego.mostrarTablero();
             mjuego.indicarTurno();
             mjuego.setFila(vjuego.mostrarIngresoFilas());
             mjuego.setColumna(vjuego.mostrarIngresoColumnas());
+            mjuego.realizarMovimiento();
+            //i++;
+            //mjuego.crearTablero();
+            //vjuego.mostrarTablero();
 
             /*
             if (mjuego.getJugador2().getNombre() != "PC") {
 
             }*/
-            mjuego.realizarMovimiento();
+        } while (!mjuego.ganador());
+    }
+
+    public void mantenerJuegoPC() {
+        do {
+            if (mjuego.indicarTurno()) {
+                mjuego.setFila(vjuego.mostrarIngresoFilas());
+                mjuego.setColumna(vjuego.mostrarIngresoColumnas());
+                mjuego.realizarMovimiento();
+            } else {
+                //mjuego.indicarTurno();
+                mjuego.realizarMovimiento();
+            }
+
         } while (!mjuego.ganador());
     }
 
