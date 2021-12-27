@@ -182,9 +182,10 @@ public class MJuego {
             columna--;
 
         } while (matriz[fila][columna] != this.simboloPorDefecto);
-        matriz[fila][columna] = 'O';
         this.fila = fila;
         this.columna = columna;
+        matriz[fila][columna] = 'O';
+
     }
 /*
     public void deshacerMovimiento(Jugador jugador) {
