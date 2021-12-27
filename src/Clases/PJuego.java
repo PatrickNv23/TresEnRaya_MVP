@@ -4,6 +4,7 @@ public class PJuego {
 
     private MJuego mjuego;
     private IVJuego vjuego;
+    int intentos;
 
     public PJuego(IVJuego vjuego) {
         this.mjuego = new MJuego();
@@ -21,7 +22,6 @@ public class PJuego {
             }
             mjuego.inicializarTablero();
             mjuego.crearTablero();
-            //mantenerJuego();
 
             if (mjuego.getJugador2().getNombre() == "PC") {
                 mantenerJuegoPC();
@@ -30,13 +30,10 @@ public class PJuego {
             }
             mjuego.getJugador1().mostrarMovimientos(mjuego.getJugador1().getMovimientos(), mjuego.getJugador1().getNombre());
             mjuego.getJugador2().mostrarMovimientos(mjuego.getJugador2().getMovimientos(), mjuego.getJugador2().getNombre());
-        }else if(mjuego.getOpcionVentanaPrincipal()==2){
-            String ruta = "C:\\Users\\Usuario\\Documents\\UNS\\VI CICLO\\ARQUITECTURA DE SOFTWARE EMPRESARIAL\\PRODUCTOS\\PRIMER MINI_PRODUCTO\\MVP_TresEnRaya\\"+vjuego.mostrarReanudarPartida();
+        } else if (mjuego.getOpcionVentanaPrincipal() == 2) {
+            String ruta = "C:\\Users\\Usuario\\Documents\\UNS\\VI CICLO\\ARQUITECTURA DE SOFTWARE EMPRESARIAL\\PRODUCTOS\\PRIMER MINI_PRODUCTO\\MVP_TresEnRaya\\" + vjuego.mostrarReanudarPartida();
             System.out.println(mjuego.leerPartida(ruta));
         }
-
-        //vjuego.mostrarTablero(mjuego.inicializarTablero());
-        //mantenerJuego();
     }
 
     public void configurarJugadorvsPc() {
@@ -58,28 +55,20 @@ public class PJuego {
     }
 
     public void mantenerJuego() {
-        //int i = 0;
+        intentos = 0;
         do {
+            intentos++;
             mjuego.indicarTurno();
-            /*
-            mjuego.setFila(vjuego.mostrarIngresoFilas());
-            mjuego.setColumna(vjuego.mostrarIngresoColumnas());*/
             posicionOcupada(mjuego.getMatriz());
             mjuego.realizarMovimiento();
             seleccionarOpcionSoloSiNoExisteGanador();
-            //i++;
-            //mjuego.crearTablero();
-            //vjuego.mostrarTablero();
+            existeTableroLlenoSegunModelo();
 
-            /*
-            if (mjuego.getJugador2().getNombre() != "PC") {
-
-            }*/
         } while (!mjuego.ganador());
     }
 
     public void seleccionarOpcionSoloSiNoExisteGanador() {
-        if (!mjuego.ganador()) {
+        if (!mjuego.ganador() && !mjuego.existeEmpate(intentos)) {
             this.seleccionarOpciondeJuego();
         }
     }
@@ -104,20 +93,25 @@ public class PJuego {
     }
 
     public void mantenerJuegoPC() {
+        intentos = 0;
         do {
+            intentos++;
             if (mjuego.indicarTurno()) {
-
-                /*
-                mjuego.setFila(vjuego.mostrarIngresoFilas());
-                mjuego.setColumna(vjuego.mostrarIngresoColumnas());*/
                 posicionOcupada(mjuego.getMatriz());
                 mjuego.realizarMovimiento();
             } else {
-                //mjuego.indicarTurno();
                 mjuego.realizarMovimiento();
             }
-
+            existeTableroLlenoSegunModelo();
         } while (!mjuego.ganador());
+    }
+
+    public void existeTableroLlenoSegunModelo() {
+        if (mjuego.existeEmpate(intentos)) {
+            System.out.println("EMPATE");
+            System.out.println("FIN DEL JUEGO");
+            System.exit(0);
+        }
     }
 
     public void posicionOcupada(char[][] matriz) {
@@ -142,13 +136,4 @@ public class PJuego {
         mjuego.setFila(fila);
         mjuego.setColumna(columna);
     }
-
-    /*
-    public void definirGanadorAlaVista(){
-         if(mjuego.isTurno()){
-            vjuego.mostrarGanador(mjuego.getJugador1().getNombre());
-        }else{
-            vjuego.mostrarGanador(mjuego.getJugador2().getNombre());
-        }
-    }*/
 }

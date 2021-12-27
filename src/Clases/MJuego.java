@@ -1,8 +1,11 @@
 package Clases;
+
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 public class MJuego {
+
     private int id;
     private int opcionModoJuego;
     private Jugador jugador1 = new Jugador();
@@ -16,13 +19,6 @@ public class MJuego {
     private boolean turno = true;
     private int opcionJuego;
     private int opcionDespuesGuardado;
-    //private String nombreDireccionPartida;
-/*
-    public void setNombreDireccionPartida(String nombreDireccionPartida) {
-        this.nombreDireccionPartida = nombreDireccionPartida;
-    }*/
-
-
 
     public int getOpcionDespuesGuardado() {
         return opcionDespuesGuardado;
@@ -82,15 +78,6 @@ public class MJuego {
         }
     }
 
-    /*
-    public char[][] inicializarTablero() {
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz.length; j++) {
-                matriz[i][j] = this.simboloPorDefecto;
-            }
-        }
-        return matriz;
-    }*/
     public void crearTablero() {
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz.length; j++) {
@@ -120,9 +107,52 @@ public class MJuego {
         this.turno = !this.turno;
     }
 
+    public boolean existeEmpate(int intentos) {
+        boolean empate = false;
+        boolean posicionocupada = false;
+        if (intentos >= 9) {
+            if(matriz[0][0]!=this.simboloPorDefecto && matriz[0][1] != this.simboloPorDefecto &&
+               matriz[0][2] != this.simboloPorDefecto && matriz[1][0] != this.simboloPorDefecto &&
+               matriz[1][1] != this.simboloPorDefecto && matriz[1][2] != this.simboloPorDefecto &&
+               matriz[2][0] != this.simboloPorDefecto && matriz[2][1] != this.simboloPorDefecto &&
+               matriz[2][2] != this.simboloPorDefecto)
+            {
+                posicionocupada = true;
+            }
+            else
+            {
+                posicionocupada = false;
+            }
+        }
+        if (posicionocupada && !this.ganador()) {
+            empate = true;
+        }
+        return empate;
+    }
+    
+    /*
+    public boolean existeEmpate(int intentos) {
+        boolean empate = false;
+        boolean posicionocupada = false;
+            for (int i = 0; i < matriz.length; i++) {
+                for (int j = 0; j < matriz.length; j++) {
+                    if (matriz[i][j] != this.simboloPorDefecto) {
+                        posicionocupada = true;
+                    } else {
+                        posicionocupada = false;
+                    }
+
+                }
+            }
+        }
+        if (posicionocupada && !this.ganador()) {
+            empate = true;
+        }
+        return empate;
+    }*/
+
     public void realizarMovimiento() {
         if (turno) {
-            //this.posicionOcupada(fila, columna, matriz);
             Movimiento mj1 = new Movimiento();
 
             mj1.setSimbolo('X');
@@ -133,16 +163,13 @@ public class MJuego {
             this.actualizarTablero(fila, columna, mj1.getSimbolo());
         } else {
             if (this.jugador2.getNombre() == "PC") {
-                //this.posicionOcupada(fila, columna, matriz);
                 Movimiento mj2 = new Movimiento();
                 this.movimientoPC();
                 mj2.setSimbolo('O');
                 mj2.setFilas(fila);
                 mj2.setColumnas(columna);
                 this.jugador2.getMovimientos().add(mj2);
-                //this.actualizarTablero(fila, columna, mj2.getSimbolo());
             } else if (this.jugador2.getNombre() != "PC") {
-                //this.posicionOcupada(fila, columna, matriz);
                 Movimiento mj2 = new Movimiento();
                 mj2.setSimbolo('O');
                 mj2.setFilas(fila);
@@ -156,21 +183,6 @@ public class MJuego {
         finalizarMovimiento();
     }
 
-    /*
-    public void posicionOcupada(int fila, int columna, char[][] matriz) {
-        boolean posicionOcupada = true;
-        do {
-            for (int i = 0; i < matriz.length; i++) {
-                for (int j = 0; j < matriz.length; j++) {
-                    if (matriz[fila][columna] != this.simboloPorDefecto) {
-                        System.out.println("La posición está ocupada");
-                    } else {
-                        posicionOcupada = false;
-                    }
-                }
-            }
-        } while (posicionOcupada);
-    }*/
     public char[][] getMatriz() {
         return matriz;
     }
@@ -204,7 +216,6 @@ public class MJuego {
                     }
                     linea.println(" ");
                 }
-                //linea.println(tablero);
                 if (turno) {
                     linea.println("ES EL TURNO DE : " + jugador1);
                 } else {
@@ -235,7 +246,6 @@ public class MJuego {
                     }
                     linea.println(" ");
                 }
-                //linea.println(tablero);
                 if (turno) {
                     linea.println("ES EL TURNO DE : " + jugador1);
                 } else {
@@ -252,18 +262,30 @@ public class MJuego {
 
     public String leerPartida(String direccion) {
         String texto = "";
+        int contador = 0;
         try {
             BufferedReader bf = new BufferedReader(new FileReader(direccion));
             String temporal = "";
             String bfread;
             while ((bfread = bf.readLine()) != null) {
-                temporal += bfread;
+                contador++;
+                if (contador >= 6 && contador <= 8) {
+                    temporal += bfread;
+                }
             }
             texto = temporal;
         } catch (Exception e) {
             System.out.println("No se encontró el archivo");
         }
         return texto;
+    }
+
+    public char[] convertirStringToCharArray(String contenidoTexto) {
+        char[] caracteres = contenidoTexto.toCharArray();
+        for (int i = 0; i < caracteres.length; i++) {
+            System.out.print(caracteres[i] + " ");
+        }
+        return caracteres;
     }
 
     public int getOpcionVentanaPrincipal() {
@@ -274,17 +296,6 @@ public class MJuego {
 
     }
 
-
-    /*
-    public void realizarMovimientoPC() {
-        Movimiento mj2 = new Movimiento();
-        this.movimientoPC();
-        mj2.setSimbolo('O');
-        mj2.setFilas(fila);
-        mj2.setColumnas(columna);
-        this.jugador2.getMovimientos().add(mj2);
-        this.actualizarTablero(fila, columna, mj2.getSimbolo());
-    }*/
     public void movimientoPC() {
         int fila, columna;
         do {
@@ -305,10 +316,6 @@ public class MJuego {
 
     }
 
-    /*
-    public void deshacerMovimiento(Jugador jugador) {
-        
-    }*/
     public void deshacerMovimiento(int fila, int columna, char simbolo) {
         this.actualizarTablero(fila, columna, simbolo);
         this.crearTablero();
@@ -319,14 +326,6 @@ public class MJuego {
         this.cambiarJugador();
     }
 
-    /*
-    public void indicarTurno() {
-        if (this.turno) {
-            System.out.println("ES EL TURNO DE : " + this.jugador1.getNombre());
-        } else {
-            System.out.println("ES EL TURNO DE : " + this.jugador2.getNombre());
-        }
-    }*/
     public boolean indicarTurno() {
         if (this.turno) {
             System.out.println("ES EL TURNO DE : " + this.jugador1.getNombre());
@@ -340,24 +339,19 @@ public class MJuego {
         char simbolo;
         boolean coincidencia;
         for (int i = 0; i < matriz.length; i++) {
-            //Reiniciamos la coincidencia
             coincidencia = true;
-            //Cogemos el simbolo de la fila
             simbolo = matriz[i][0];
             if (simbolo != this.simboloPorDefecto) {
                 for (int j = 1; j < matriz[0].length; j++) {
-                    //sino coincide ya no habra ganadro en esta fila
                     if (simbolo != matriz[i][j]) {
                         coincidencia = false;
                     }
                 }
-                //Si no se mete en el if, devuelvo el simbolo ganador
                 if (coincidencia) {
                     return simbolo;
                 }
             }
         }
-        //Si no hay ganador, devuelvo el simbolo por defecto
         return this.simboloPorDefecto;
     }
 
@@ -365,24 +359,19 @@ public class MJuego {
         char simbolo;
         boolean coincidencia;
         for (int j = 0; j < matriz.length; j++) {
-            //Reiniciamos la coincidencia
             coincidencia = true;
-            //Cogemos el simbolo de la columna
             simbolo = matriz[0][j];
             if (simbolo != this.simboloPorDefecto) {
                 for (int i = 1; i < matriz[0].length; i++) {
-                    //sino coincide ya no habra ganadro en esta fila
                     if (simbolo != matriz[i][j]) {
                         coincidencia = false;
                     }
                 }
-                //Si no se mete en el if, devuelvo el simbolo ganador
                 if (coincidencia) {
                     return simbolo;
                 }
             }
         }
-        //Si no hay ganador, devuelvo el simbolo por defecto
         return this.simboloPorDefecto;
 
     }
@@ -390,36 +379,31 @@ public class MJuego {
     public char coincidenciaDiagonal() {
         char simbolo;
         boolean coincidencia = true;
-        //Diagonal principal
         simbolo = matriz[0][0];
         if (simbolo != this.simboloPorDefecto) {
             for (int i = 1; i < matriz.length; i++) {
-                //sino coincide ya no habra ganadro en esta fila
                 if (simbolo != matriz[i][i]) {
                     coincidencia = false;
                 }
             }
-            //Si no se mete en el if, devuelvo el simbolo ganador
             if (coincidencia) {
                 return simbolo;
             }
         }
         coincidencia = true;
-        //Diagonal inversa
+
+        // diagonal inversa
         simbolo = matriz[0][2];
         if (simbolo != this.simboloPorDefecto) {
             for (int i = 1, j = 1; i < matriz.length; i++, j--) {
-                //sino coincide ya no habra ganadro en esta fila
                 if (simbolo != matriz[i][j]) {
                     coincidencia = false;
                 }
             }
-            //Si no se mete en el if, devuelvo el simbolo ganador
             if (coincidencia) {
                 return simbolo;
             }
         }
-        //Si no hay ganador, devuelvo el simbolo por defecto
         return this.simboloPorDefecto;
 
     }

@@ -341,7 +341,7 @@ public class VFormJuego extends javax.swing.JFrame{
     }//GEN-LAST:event_btnJugador2ActionPerformed
 
     private void btnFinalizarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarPartidaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnFinalizarPartidaActionPerformed
 
    

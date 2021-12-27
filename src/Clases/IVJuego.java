@@ -1,6 +1,4 @@
-
 package Clases;
-
 public interface IVJuego {
     void setPresentador(PJuego p);
     void iniciar();

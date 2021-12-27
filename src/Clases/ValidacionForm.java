@@ -3,7 +3,6 @@ package Clases;
 
 
 public class ValidacionForm implements IValidacion {
-
     @Override
     public String validarGanador() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

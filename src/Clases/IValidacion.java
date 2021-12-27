@@ -1,6 +1,4 @@
-
 package Clases;
-
 public interface IValidacion {
     String validarGanador();
     String validarString();

@@ -79,20 +79,7 @@ public class VCJuego implements IVJuego {
         }
     }
 
-    /*
-    @Override
-    public void mostrarTablero(char[][] matriz) {
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz.length; j++) {
-                System.out.print(matriz[i][j] + " ");
-            }
-            System.out.println(" ");
-        }
-    }
-    
-    public void actualizarTablero(int fila, int columna, char simbolo) {
-        matriz[fila][columna] = simbolo;
-    }*/
+   
     @Override
     public int mostrarIngresoFilas() {
         ValidacionConsola validacion = new ValidacionConsola();

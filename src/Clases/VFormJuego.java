@@ -97,5 +97,4 @@ public class VFormJuego extends javax.swing.JFrame implements IVJuego {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-}
-*/
+}*/

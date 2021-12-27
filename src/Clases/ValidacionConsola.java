@@ -48,31 +48,6 @@ public class ValidacionConsola implements IValidacion {
         return opcion;
     }
 
-    /*
-    @Override
-    public String validarString() {
-        boolean valido = false;
-        String entrada = "";
-        do {
-            
-            try {
-                String entrada2 = leer.next();
-                entrada = entrada2;
-        //entrada = leer.next();
-                if (entrada == "") {
-                    this.mostrarError("Ingrese una cadena de caracteres");
-                }else{
-                    valido = true;
-                }
-//InputMismatchException
-            } catch (Exception e) {
-                this.mostrarError("Ingrese una cadena de caracteres");
-            }
-        } while (valido);
-        return entrada;
-    }*/
-    
-    
     @Override
     public String validarString() {
         boolean valido = true;
