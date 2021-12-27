@@ -8,6 +8,5 @@ public class Principal {
         juego.setPresentador(presentador);
         juego.iniciar();
     }
-    
 }
 

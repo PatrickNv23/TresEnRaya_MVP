@@ -1,6 +1,7 @@
 package Clases;
 
 public class Movimiento {
+
     private char simbolo;
     private int filas;
     private int columnas;
@@ -13,6 +14,14 @@ public class Movimiento {
         this.simbolo = simbolo;
     }
 
+    public int getFilas() {
+        return filas;
+    }
+
+    public int getColumnas() {
+        return columnas;
+    }
+
     public void setFilas(int filas) {
         this.filas = filas;
     }
@@ -20,6 +29,5 @@ public class Movimiento {
     public void setColumnas(int columnas) {
         this.columnas = columnas;
     }
-    
-    
+
 }

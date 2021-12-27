@@ -19,6 +19,10 @@ public class Jugador {
         return movimientos;
     }
     
-    
+    public void mostrarMovimientos(ArrayList<Movimiento> movimientos,String nombre){
+        for(Movimiento m: movimientos){
+            System.out.println("Jugador: "+nombre+", Simbolo: "+m.getSimbolo()+", Fila: "+m.getFilas()+", Columna: "+m.getColumnas()+"\n");
+        }
+    }
     
 }

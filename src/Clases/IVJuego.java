@@ -9,6 +9,7 @@ public interface IVJuego {
     int mostrarElegirJugador();
     String mostrarIngresoNombreJugador(int opcion);
     void mostrarTablero();
+    int mostrarOpcionesdeJuego();
     int mostrarIngresoFilas();
     int mostrarIngresoColumnas();
     String mostrarGanador(String nombre);

@@ -13,10 +13,20 @@ public class MJuego {
     private char[][] matriz = new char[3][3];
     private char simboloPorDefecto = '-';
     private boolean turno = true;
+    private int opcionJuego;
 
     public void setGanador(String ganador) {
         this.ganador = ganador;
     }
+
+    public int getOpcionJuego() {
+        return opcionJuego;
+    }
+
+    public void setOpcionJuego(int opcionJuego) {
+        this.opcionJuego = opcionJuego;
+    }
+
     private String ganador;
 
     public int getOpcionModoJuego() {
@@ -95,14 +105,18 @@ public class MJuego {
 
     public void realizarMovimiento() {
         if (turno) {
+            //this.posicionOcupada(fila, columna, matriz);
             Movimiento mj1 = new Movimiento();
+
             mj1.setSimbolo('X');
             mj1.setFilas(fila);
             mj1.setColumnas(columna);
+
             this.jugador1.getMovimientos().add(mj1);
             this.actualizarTablero(fila, columna, mj1.getSimbolo());
         } else {
             if (this.jugador2.getNombre() == "PC") {
+                //this.posicionOcupada(fila, columna, matriz);
                 Movimiento mj2 = new Movimiento();
                 this.movimientoPC();
                 mj2.setSimbolo('O');
@@ -110,7 +124,8 @@ public class MJuego {
                 mj2.setColumnas(columna);
                 this.jugador2.getMovimientos().add(mj2);
                 //this.actualizarTablero(fila, columna, mj2.getSimbolo());
-            } else if(this.jugador2.getNombre()!= "PC") {
+            } else if (this.jugador2.getNombre() != "PC") {
+                //this.posicionOcupada(fila, columna, matriz);
                 Movimiento mj2 = new Movimiento();
                 mj2.setSimbolo('O');
                 mj2.setFilas(fila);
@@ -123,6 +138,26 @@ public class MJuego {
         definirGanador();
         finalizarMovimiento();
     }
+/*
+    public void posicionOcupada(int fila, int columna, char[][] matriz) {
+        boolean posicionOcupada = true;
+        do {
+            for (int i = 0; i < matriz.length; i++) {
+                for (int j = 0; j < matriz.length; j++) {
+                    if (matriz[fila][columna] != this.simboloPorDefecto) {
+                        System.out.println("La posición está ocupada");
+                    } else {
+                        posicionOcupada = false;
+                    }
+                }
+            }
+        } while (posicionOcupada);
+    }*/
+
+    public char[][] getMatriz() {
+        return matriz;
+    }
+
     /*
     public void realizarMovimientoPC() {
         Movimiento mj2 = new Movimiento();
@@ -133,7 +168,6 @@ public class MJuego {
         this.jugador2.getMovimientos().add(mj2);
         this.actualizarTablero(fila, columna, mj2.getSimbolo());
     }*/
-
     public void movimientoPC() {
         int fila, columna;
         do {
@@ -152,15 +186,21 @@ public class MJuego {
         this.fila = fila;
         this.columna = columna;
     }
-
+/*
     public void deshacerMovimiento(Jugador jugador) {
         
+    }*/
+    public void deshacerMovimiento(int fila, int columna, char simbolo){
+        this.actualizarTablero(fila, columna, simbolo);
+        this.crearTablero();
+        this.cambiarJugador();
     }
 
     public void finalizarMovimiento() {
         this.cambiarJugador();
     }
-/*
+
+    /*
     public void indicarTurno() {
         if (this.turno) {
             System.out.println("ES EL TURNO DE : " + this.jugador1.getNombre());
@@ -168,8 +208,6 @@ public class MJuego {
             System.out.println("ES EL TURNO DE : " + this.jugador2.getNombre());
         }
     }*/
-
-    
     public boolean indicarTurno() {
         if (this.turno) {
             System.out.println("ES EL TURNO DE : " + this.jugador1.getNombre());
@@ -178,6 +216,7 @@ public class MJuego {
         }
         return turno;
     }
+
     public char coincidenciaLinea() {
         char simbolo;
         boolean coincidencia;
@@ -291,7 +330,6 @@ public class MJuego {
                 System.out.println("El ganador es: " + this.getJugador2().getNombre());
             }
         }
-
     }
 
     public void seleccionModoJuego() {

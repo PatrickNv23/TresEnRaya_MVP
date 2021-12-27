@@ -25,7 +25,7 @@ public class ValidacionForm implements IValidacion {
     }
 
     @Override
-    public int validarOpcion() {
+    public int validarMenu() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

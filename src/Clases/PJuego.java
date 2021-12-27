@@ -27,6 +27,8 @@ public class PJuego {
         } else {
             mantenerJuego();
         }
+        mjuego.getJugador1().mostrarMovimientos(mjuego.getJugador1().getMovimientos(), mjuego.getJugador1().getNombre());
+        mjuego.getJugador2().mostrarMovimientos(mjuego.getJugador2().getMovimientos(), mjuego.getJugador2().getNombre());
 
         //vjuego.mostrarTablero(mjuego.inicializarTablero());
         //mantenerJuego();
@@ -54,9 +56,12 @@ public class PJuego {
         //int i = 0;
         do {
             mjuego.indicarTurno();
+            /*
             mjuego.setFila(vjuego.mostrarIngresoFilas());
-            mjuego.setColumna(vjuego.mostrarIngresoColumnas());
+            mjuego.setColumna(vjuego.mostrarIngresoColumnas());*/
+            posicionOcupada(mjuego.getMatriz());
             mjuego.realizarMovimiento();
+            seleccionarOpcionSoloSiNoExisteGanador();
             //i++;
             //mjuego.crearTablero();
             //vjuego.mostrarTablero();
@@ -68,11 +73,32 @@ public class PJuego {
         } while (!mjuego.ganador());
     }
 
+    public void seleccionarOpcionSoloSiNoExisteGanador() {
+        if (!mjuego.ganador()) {
+            this.seleccionarOpciondeJuego();
+        }
+    }
+
+    public void seleccionarOpciondeJuego() {
+        mjuego.setOpcionJuego(vjuego.mostrarOpcionesdeJuego());
+        if (mjuego.getOpcionJuego() == 1) {
+            // retroceder
+            mjuego.deshacerMovimiento(mjuego.getFila(), mjuego.getColumna(), '-');
+        } else if (mjuego.getOpcionJuego() == 2) {
+            vjuego.mostrarGuardarPartida();
+        } else if (mjuego.getOpcionJuego() == 3) {
+            System.out.println("CONTINUANDO CON EL JUEGO");
+        }
+    }
+
     public void mantenerJuegoPC() {
         do {
             if (mjuego.indicarTurno()) {
+
+                /*
                 mjuego.setFila(vjuego.mostrarIngresoFilas());
-                mjuego.setColumna(vjuego.mostrarIngresoColumnas());
+                mjuego.setColumna(vjuego.mostrarIngresoColumnas());*/
+                posicionOcupada(mjuego.getMatriz());
                 mjuego.realizarMovimiento();
             } else {
                 //mjuego.indicarTurno();
@@ -80,6 +106,29 @@ public class PJuego {
             }
 
         } while (!mjuego.ganador());
+    }
+
+    public void posicionOcupada(char[][] matriz) {
+        boolean posicionOcupada = true;
+        int fila, columna;
+        do {
+            fila = vjuego.mostrarIngresoFilas();
+            columna = vjuego.mostrarIngresoColumnas();
+            for (int i = 0; i < matriz.length; i++) {
+                for (int j = 0; j < matriz.length; j++) {
+                    if (matriz[fila][columna] != '-') {
+                        posicionOcupada = true;
+                    } else {
+                        posicionOcupada = false;
+                    }
+                }
+            }
+            if (posicionOcupada) {
+                System.out.println("La posición está ocupada");
+            }
+        } while (posicionOcupada);
+        mjuego.setFila(fila);
+        mjuego.setColumna(columna);
     }
 
     /*

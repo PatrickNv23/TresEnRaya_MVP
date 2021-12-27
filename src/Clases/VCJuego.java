@@ -24,7 +24,7 @@ public class VCJuego implements IVJuego{
         System.out.println("Seleccione una opción: ");
         System.out.println("1. Iniciar partida");
         System.out.println("2. Reanudar partida");
-        return validacion.validarOpcion();
+        return validacion.validarMenu();
     }
     
 
@@ -39,7 +39,17 @@ public class VCJuego implements IVJuego{
         System.out.println("Seleccione su modo de juego: ");
         System.out.println("1. Jugador vs PC");
         System.out.println("2. Jugador1 vs Jugador2");
-        return validacion.validarOpcion();
+        return validacion.validarMenu();
+    }
+    
+    
+    public int mostrarOpcionesdeJuego(){
+        ValidacionConsola validacion = new ValidacionConsola();
+        System.out.println("--- OPCIONES ---");
+        System.out.println("1. Retroceder jugada");
+        System.out.println("2. Guardar partida");
+        System.out.println("3. Seguir con el juego");
+        return validacion.validarOpciones();
     }
 
     @Override
@@ -48,7 +58,7 @@ public class VCJuego implements IVJuego{
         System.out.println("Seleccione el jugador: ");
         System.out.println("1. Jugador1 (X)");
         System.out.println("2. Jugador2 (O)");
-        return validacion.validarOpcion();
+        return validacion.validarMenu();
     }
 
     @Override

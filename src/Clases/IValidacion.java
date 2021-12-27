@@ -6,5 +6,5 @@ public interface IValidacion {
     String validarString();
     char validarMovimiento();
     void mostrarError(String formato);
-    int validarOpcion();
+    int validarMenu();
 }
