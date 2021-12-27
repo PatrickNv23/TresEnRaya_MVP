@@ -12,23 +12,28 @@ public class PJuego {
 
     public void presentar() {
         mjuego.setOpcionVentanaPrincipal(vjuego.mostrarVentanaPrincipal());
-        mjuego.setOpcionModoJuego(vjuego.mostrarSeleccionarModoJuego());
-        if (mjuego.getOpcionModoJuego() == 1) {
-            this.configurarJugadorvsPc();
-        } else if (mjuego.getOpcionModoJuego() == 2) {
-            this.configurarJugador1vsJugador2();
-        }
-        mjuego.inicializarTablero();
-        mjuego.crearTablero();
-        //mantenerJuego();
+        if (mjuego.getOpcionVentanaPrincipal() == 1) {
+            mjuego.setOpcionModoJuego(vjuego.mostrarSeleccionarModoJuego());
+            if (mjuego.getOpcionModoJuego() == 1) {
+                this.configurarJugadorvsPc();
+            } else if (mjuego.getOpcionModoJuego() == 2) {
+                this.configurarJugador1vsJugador2();
+            }
+            mjuego.inicializarTablero();
+            mjuego.crearTablero();
+            //mantenerJuego();
 
-        if (mjuego.getJugador2().getNombre() == "PC") {
-            mantenerJuegoPC();
-        } else {
-            mantenerJuego();
+            if (mjuego.getJugador2().getNombre() == "PC") {
+                mantenerJuegoPC();
+            } else {
+                mantenerJuego();
+            }
+            mjuego.getJugador1().mostrarMovimientos(mjuego.getJugador1().getMovimientos(), mjuego.getJugador1().getNombre());
+            mjuego.getJugador2().mostrarMovimientos(mjuego.getJugador2().getMovimientos(), mjuego.getJugador2().getNombre());
+        }else if(mjuego.getOpcionVentanaPrincipal()==2){
+            String ruta = "C:\\Users\\Usuario\\Documents\\UNS\\VI CICLO\\ARQUITECTURA DE SOFTWARE EMPRESARIAL\\PRODUCTOS\\PRIMER MINI_PRODUCTO\\MVP_TresEnRaya\\"+vjuego.mostrarReanudarPartida();
+            System.out.println(mjuego.leerPartida(ruta));
         }
-        mjuego.getJugador1().mostrarMovimientos(mjuego.getJugador1().getMovimientos(), mjuego.getJugador1().getNombre());
-        mjuego.getJugador2().mostrarMovimientos(mjuego.getJugador2().getMovimientos(), mjuego.getJugador2().getNombre());
 
         //vjuego.mostrarTablero(mjuego.inicializarTablero());
         //mantenerJuego();
@@ -85,7 +90,14 @@ public class PJuego {
             // retroceder
             mjuego.deshacerMovimiento(mjuego.getFila(), mjuego.getColumna(), '-');
         } else if (mjuego.getOpcionJuego() == 2) {
-            vjuego.mostrarGuardarPartida();
+            String nombre = vjuego.mostrarGuardarPartida();
+            mjuego.guardarPartida(nombre);
+            mjuego.setOpcionDespuesGuardado(vjuego.mostrarOpcionesDespuesGuardado());
+            if (mjuego.getOpcionDespuesGuardado() == 1) {
+                System.exit(0);
+            } else if (mjuego.getOpcionDespuesGuardado() == 2) {
+                System.out.println("------ CONTINUANDO ------");
+            }
         } else if (mjuego.getOpcionJuego() == 3) {
             System.out.println("CONTINUANDO CON EL JUEGO");
         }

@@ -4,7 +4,7 @@ package Clases;
 public interface IVJuego {
     void setPresentador(PJuego p);
     void iniciar();
-    void mostrarReanudarPartida();
+    String mostrarReanudarPartida();
     int mostrarSeleccionarModoJuego();
     int mostrarElegirJugador();
     String mostrarIngresoNombreJugador(int opcion);
@@ -13,6 +13,7 @@ public interface IVJuego {
     int mostrarIngresoFilas();
     int mostrarIngresoColumnas();
     String mostrarGanador(String nombre);
-    void mostrarGuardarPartida();
+    String mostrarGuardarPartida();
     int mostrarVentanaPrincipal();
+    int mostrarOpcionesDespuesGuardado();
 }

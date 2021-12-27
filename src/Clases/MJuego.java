@@ -1,7 +1,8 @@
 package Clases;
-
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 public class MJuego {
-
     private int id;
     private int opcionModoJuego;
     private Jugador jugador1 = new Jugador();
@@ -14,6 +15,22 @@ public class MJuego {
     private char simboloPorDefecto = '-';
     private boolean turno = true;
     private int opcionJuego;
+    private int opcionDespuesGuardado;
+    //private String nombreDireccionPartida;
+/*
+    public void setNombreDireccionPartida(String nombreDireccionPartida) {
+        this.nombreDireccionPartida = nombreDireccionPartida;
+    }*/
+
+
+
+    public int getOpcionDespuesGuardado() {
+        return opcionDespuesGuardado;
+    }
+
+    public void setOpcionDespuesGuardado(int opcionDespuesGuardado) {
+        this.opcionDespuesGuardado = opcionDespuesGuardado;
+    }
 
     public void setGanador(String ganador) {
         this.ganador = ganador;
@@ -138,7 +155,8 @@ public class MJuego {
         definirGanador();
         finalizarMovimiento();
     }
-/*
+
+    /*
     public void posicionOcupada(int fila, int columna, char[][] matriz) {
         boolean posicionOcupada = true;
         do {
@@ -153,10 +171,109 @@ public class MJuego {
             }
         } while (posicionOcupada);
     }*/
-
     public char[][] getMatriz() {
         return matriz;
     }
+
+    public void guardarPartida(String nombrearchivo) {
+        File archivo;
+        FileWriter escribir;
+        PrintWriter linea;
+        String jugador1 = "", jugador2 = "", nombrepartida = "";
+        boolean turno = true;
+        char[][] tablero = new char[3][3];
+        archivo = new File(nombrearchivo);
+        if (!archivo.exists()) {
+            try {
+                archivo.createNewFile();
+                nombrepartida = nombrearchivo;
+                jugador1 = this.getJugador1().getNombre();
+                jugador2 = this.getJugador2().getNombre();
+                tablero = this.getMatriz();
+                turno = this.turno;
+                escribir = new FileWriter(archivo, true);
+                linea = new PrintWriter(escribir);
+                linea.println("-------------------");
+                linea.println("Partida: " + nombrepartida);
+                linea.println("Jugador1 ----> " + jugador1);
+                linea.println("Jugador2 ----> " + jugador2);
+                linea.println("-------------------");
+                for (int i = 0; i < tablero.length; i++) {
+                    for (int j = 0; j < tablero.length; j++) {
+                        linea.print(matriz[i][j] + " ");
+                    }
+                    linea.println(" ");
+                }
+                //linea.println(tablero);
+                if (turno) {
+                    linea.println("ES EL TURNO DE : " + jugador1);
+                } else {
+                    linea.println("ES EL TURNO DE : " + jugador2);
+                }
+                linea.close();
+                escribir.close();
+            } catch (IOException ex) {
+                Logger.getLogger(MJuego.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                nombrepartida = nombrearchivo;
+                jugador1 = this.getJugador1().getNombre();
+                jugador2 = this.getJugador2().getNombre();
+                tablero = this.getMatriz();
+                turno = this.turno;
+                escribir = new FileWriter(archivo, true);
+                linea = new PrintWriter(escribir);
+                linea.println("-------------------");
+                linea.println("Partida: " + nombrepartida);
+                linea.println("Jugador1 ----> " + jugador1);
+                linea.println("Jugador2 ----> " + jugador2);
+                linea.println("-------------------");
+                for (int i = 0; i < tablero.length; i++) {
+                    for (int j = 0; j < tablero.length; j++) {
+                        linea.print(matriz[i][j] + " ");
+                    }
+                    linea.println(" ");
+                }
+                //linea.println(tablero);
+                if (turno) {
+                    linea.println("ES EL TURNO DE : " + jugador1);
+                } else {
+                    linea.println("ES EL TURNO DE : " + jugador2);
+                }
+                linea.close();
+                escribir.close();
+            } catch (IOException ex) {
+                Logger.getLogger(MJuego.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
+
+    public String leerPartida(String direccion) {
+        String texto = "";
+        try {
+            BufferedReader bf = new BufferedReader(new FileReader(direccion));
+            String temporal = "";
+            String bfread;
+            while ((bfread = bf.readLine()) != null) {
+                temporal += bfread;
+            }
+            texto = temporal;
+        } catch (Exception e) {
+            System.out.println("No se encontró el archivo");
+        }
+        return texto;
+    }
+
+    public int getOpcionVentanaPrincipal() {
+        return opcionVentanaPrincipal;
+    }
+
+    public void reanudarPartida() {
+
+    }
+
 
     /*
     public void realizarMovimientoPC() {
@@ -187,11 +304,12 @@ public class MJuego {
         matriz[fila][columna] = 'O';
 
     }
-/*
+
+    /*
     public void deshacerMovimiento(Jugador jugador) {
         
     }*/
-    public void deshacerMovimiento(int fila, int columna, char simbolo){
+    public void deshacerMovimiento(int fila, int columna, char simbolo) {
         this.actualizarTablero(fila, columna, simbolo);
         this.crearTablero();
         this.cambiarJugador();

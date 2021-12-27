@@ -1,9 +1,9 @@
-
 package Clases;
 
-public class VCJuego implements IVJuego{
+public class VCJuego implements IVJuego {
+
     private PJuego presentador;
-    char [][] matriz= new char[3][3];
+    char[][] matriz = new char[3][3];
     private char simboloPorDefecto = '-';
 
     @Override
@@ -13,9 +13,9 @@ public class VCJuego implements IVJuego{
 
     @Override
     public void iniciar() {
-        presentador.presentar();  
+        presentador.presentar();
     }
-    
+
     @Override
     public int mostrarVentanaPrincipal() {
         IValidacion validacion = new ValidacionConsola();
@@ -26,11 +26,12 @@ public class VCJuego implements IVJuego{
         System.out.println("2. Reanudar partida");
         return validacion.validarMenu();
     }
-    
 
     @Override
-    public void mostrarReanudarPartida() {
-        
+    public String mostrarReanudarPartida() {
+        IValidacion validacion = new ValidacionConsola();
+        System.out.println("Ingrese el nombre de la partida: ");
+        return validacion.validarString();
     }
 
     @Override
@@ -41,9 +42,8 @@ public class VCJuego implements IVJuego{
         System.out.println("2. Jugador1 vs Jugador2");
         return validacion.validarMenu();
     }
-    
-    
-    public int mostrarOpcionesdeJuego(){
+
+    public int mostrarOpcionesdeJuego() {
         ValidacionConsola validacion = new ValidacionConsola();
         System.out.println("--- OPCIONES ---");
         System.out.println("1. Retroceder jugada");
@@ -63,14 +63,14 @@ public class VCJuego implements IVJuego{
 
     @Override
     public String mostrarIngresoNombreJugador(int opcion) {
-       IValidacion validacion = new ValidacionConsola();
-        System.out.println("Ingrese el nombre del jugador " +opcion+ ": ");
+        IValidacion validacion = new ValidacionConsola();
+        System.out.println("Ingrese el nombre del jugador " + opcion + ": ");
         return validacion.validarString();
     }
 
     @Override
     public void mostrarTablero() {
-       char [][] matriz= new char[3][3];
+        char[][] matriz = new char[3][3];
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz.length; j++) {
                 System.out.print('-' + " ");
@@ -78,6 +78,7 @@ public class VCJuego implements IVJuego{
             System.out.println(" ");
         }
     }
+
     /*
     @Override
     public void mostrarTablero(char[][] matriz) {
@@ -92,9 +93,6 @@ public class VCJuego implements IVJuego{
     public void actualizarTablero(int fila, int columna, char simbolo) {
         matriz[fila][columna] = simbolo;
     }*/
-    
-    
-
     @Override
     public int mostrarIngresoFilas() {
         ValidacionConsola validacion = new ValidacionConsola();
@@ -116,12 +114,19 @@ public class VCJuego implements IVJuego{
     }
 
     @Override
-    public void mostrarGuardarPartida() {
-       IValidacion validacion = new ValidacionConsola();
+    public String mostrarGuardarPartida() {
+        IValidacion validacion = new ValidacionConsola();
         System.out.println("-------- GUARDAR PARTIDA -------");
         System.out.println("Ingrese el nombre del archivo: ");
-        validacion.validarString();
-        System.out.println("!GUARDADO!");
+        return validacion.validarString();
+    }
+
+    public int mostrarOpcionesDespuesGuardado() {
+        IValidacion validacion = new ValidacionConsola();
+        System.out.println("----------------");
+        System.out.println("1. Finalizar partida");
+        System.out.println("2. Continuar con el juego");
+        return validacion.validarMenu();
     }
 
 }
