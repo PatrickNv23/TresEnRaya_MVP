@@ -115,5 +115,4 @@ public class VCJuego implements IVJuego {
         System.out.println("2. Continuar con el juego");
         return validacion.validarMenu();
     }
-
 }

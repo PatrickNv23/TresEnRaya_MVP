@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Jugador {
     private String nombre;
     private ArrayList<Movimiento> movimientos = new ArrayList<>();
-
+    private TipoJugador tipojugador;
     public String getNombre() {
         return nombre;
     }
@@ -23,5 +23,15 @@ public class Jugador {
             System.out.println("Jugador: "+nombre+", Simbolo: "+m.getSimbolo()+", Fila: "+m.getFilas()+", Columna: "+m.getColumnas()+"\n");
         }
     }
+
+    public TipoJugador getTipojugador() {
+        return tipojugador;
+    }
+
+    public void setTipojugador(TipoJugador tipojugador) {
+        this.tipojugador = tipojugador;
+    }
+    
+    
     
 }

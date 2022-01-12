@@ -20,16 +20,17 @@ public class PJuego {
             } else if (mjuego.getOpcionModoJuego() == 2) {
                 this.configurarJugador1vsJugador2();
             }
-            mjuego.inicializarTablero();
-            mjuego.crearTablero();
+            mjuego.getTablero().inicializarTablero();
+            mjuego.getTablero().crearTablero();
 
-            if (mjuego.getJugador2().getNombre() == "PC") {
+            if (mjuego.getTurnoo().getJugador2().getNombre() == "PC") {
                 mantenerJuegoPC();
             } else {
                 mantenerJuego();
             }
-            mjuego.getJugador1().mostrarMovimientos(mjuego.getJugador1().getMovimientos(), mjuego.getJugador1().getNombre());
-            mjuego.getJugador2().mostrarMovimientos(mjuego.getJugador2().getMovimientos(), mjuego.getJugador2().getNombre());
+            
+            mjuego.getTurnoo().getJugador1().mostrarMovimientos(mjuego.getTurnoo().getJugador1().getMovimientos(), mjuego.getTurnoo().getJugador1().getNombre());
+            mjuego.getTurnoo().getJugador2().mostrarMovimientos(mjuego.getTurnoo().getJugador2().getMovimientos(), mjuego.getTurnoo().getJugador2().getNombre());
         } else if (mjuego.getOpcionVentanaPrincipal() == 2) {
             String ruta = "C:\\Users\\Usuario\\Documents\\UNS\\VI CICLO\\ARQUITECTURA DE SOFTWARE EMPRESARIAL\\PRODUCTOS\\PRIMER MINI_PRODUCTO\\MVP_TresEnRaya\\" + vjuego.mostrarReanudarPartida();
             System.out.println(mjuego.leerPartida(ruta));
@@ -37,20 +38,28 @@ public class PJuego {
     }
 
     public void configurarJugadorvsPc() {
-        mjuego.getJugador1().setNombre(vjuego.mostrarIngresoNombreJugador(1));
-        mjuego.getJugador2().setNombre("PC");
-        System.out.println("Jugador1: " + mjuego.getJugador1().getNombre());
+        mjuego.getTurnoo().getJugador1().setNombre(vjuego.mostrarIngresoNombreJugador(1));
+        mjuego.getTurnoo().getJugador1().setTipojugador(TipoJugador.PERSONA);
+        
+        mjuego.getTurnoo().getJugador2().setNombre("PC");
+        mjuego.getTurnoo().getJugador2().setTipojugador(TipoJugador.MAQUINA);
+        
+        System.out.println("Jugador1: " + mjuego.getTurnoo().getJugador1().getNombre());
         System.out.println("Jugador 2: PC");
     }
 
     public void configurarJugador1vsJugador2() {
         mjuego.setOpcionJugadorElegido(vjuego.mostrarElegirJugador());
         if (mjuego.getOpcionJugadorElegido() == 1) {
-            mjuego.getJugador1().setNombre(vjuego.mostrarIngresoNombreJugador(1));
-            mjuego.getJugador2().setNombre(vjuego.mostrarIngresoNombreJugador(2));
+            mjuego.getTurnoo().getJugador1().setNombre(vjuego.mostrarIngresoNombreJugador(1));
+            mjuego.getTurnoo().getJugador1().setTipojugador(TipoJugador.PERSONA);
+            mjuego.getTurnoo().getJugador2().setNombre(vjuego.mostrarIngresoNombreJugador(2));
+            mjuego.getTurnoo().getJugador2().setTipojugador(TipoJugador.PERSONA);
         } else if (mjuego.getOpcionJugadorElegido() == 2) {
-            mjuego.getJugador2().setNombre(vjuego.mostrarIngresoNombreJugador(2));
-            mjuego.getJugador1().setNombre(vjuego.mostrarIngresoNombreJugador(1));
+            mjuego.getTurnoo().getJugador2().setNombre(vjuego.mostrarIngresoNombreJugador(2));
+            mjuego.getTurnoo().getJugador2().setTipojugador(TipoJugador.PERSONA);
+            mjuego.getTurnoo().getJugador1().setNombre(vjuego.mostrarIngresoNombreJugador(1));
+            mjuego.getTurnoo().getJugador1().setTipojugador(TipoJugador.PERSONA);
         }
     }
 
@@ -58,17 +67,17 @@ public class PJuego {
         intentos = 0;
         do {
             intentos++;
-            mjuego.indicarTurno();
-            posicionOcupada(mjuego.getMatriz());
+            mjuego.getTurnoo().indicarTurno();
+            posicionOcupada(mjuego.getTablero().getMatriz());
             mjuego.realizarMovimiento();
             seleccionarOpcionSoloSiNoExisteGanador();
             existeTableroLlenoSegunModelo();
 
-        } while (!mjuego.ganador());
+        } while (!mjuego.getValidacionGanador().validarGanador(mjuego.getTablero().getMatriz(), mjuego.getTablero().getSimboloPorDefecto()));
     }
 
     public void seleccionarOpcionSoloSiNoExisteGanador() {
-        if (!mjuego.ganador() && !mjuego.existeEmpate(intentos)) {
+        if (!mjuego.getValidacionGanador().validarGanador(mjuego.getTablero().getMatriz(), mjuego.getTablero().getSimboloPorDefecto()) && !mjuego.getValidacionGanador().existeEmpate(intentos,mjuego.getTablero().getMatriz(),mjuego.getTablero().getSimboloPorDefecto())) {
             this.seleccionarOpciondeJuego();
         }
     }
@@ -77,7 +86,7 @@ public class PJuego {
         mjuego.setOpcionJuego(vjuego.mostrarOpcionesdeJuego());
         if (mjuego.getOpcionJuego() == 1) {
             // retroceder
-            mjuego.deshacerMovimiento(mjuego.getFila(), mjuego.getColumna(), '-');
+            mjuego.deshacerMovimiento(mjuego.getTablero().getFila(), mjuego.getTablero().getColumna(), '-');
         } else if (mjuego.getOpcionJuego() == 2) {
             String nombre = vjuego.mostrarGuardarPartida();
             mjuego.guardarPartida(nombre);
@@ -96,18 +105,18 @@ public class PJuego {
         intentos = 0;
         do {
             intentos++;
-            if (mjuego.indicarTurno()) {
-                posicionOcupada(mjuego.getMatriz());
+            if (mjuego.getTurnoo().indicarTurno()) {
+                posicionOcupada(mjuego.getTablero().getMatriz());
                 mjuego.realizarMovimiento();
             } else {
                 mjuego.realizarMovimiento();
             }
             existeTableroLlenoSegunModelo();
-        } while (!mjuego.ganador());
+        } while (!mjuego.getValidacionGanador().validarGanador(mjuego.getTablero().getMatriz(), mjuego.getTablero().getSimboloPorDefecto()));
     }
 
     public void existeTableroLlenoSegunModelo() {
-        if (mjuego.existeEmpate(intentos)) {
+        if (mjuego.getValidacionGanador().existeEmpate(intentos,mjuego.getTablero().getMatriz(),mjuego.getTablero().getSimboloPorDefecto())) {
             System.out.println("EMPATE");
             System.out.println("FIN DEL JUEGO");
             System.exit(0);
@@ -133,7 +142,7 @@ public class PJuego {
                 System.out.println("La posición está ocupada");
             }
         } while (posicionOcupada);
-        mjuego.setFila(fila);
-        mjuego.setColumna(columna);
+        mjuego.getTablero().setFila(fila);
+        mjuego.getTablero().setColumna(columna);
     }
 }

@@ -14,4 +14,6 @@ public interface IVJuego {
     String mostrarGuardarPartida();
     int mostrarVentanaPrincipal();
     int mostrarOpcionesDespuesGuardado();
+    //void mostrarTurno(); // tratar de implementar
+    //void mostrarGanador(); // tratar de implementar
 }
