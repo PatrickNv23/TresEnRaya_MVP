@@ -1,6 +1,6 @@
 package Clases;
 
-public class PJuego {
+public class PJuego implements IntPresentador {
 
     private MJuego mjuego;
     private IVJuego vjuego;
@@ -11,6 +11,7 @@ public class PJuego {
         this.vjuego = vjuego;
     }
 
+    @Override
     public void presentar() {
         mjuego.setOpcionVentanaPrincipal(vjuego.mostrarVentanaPrincipal());
         if (mjuego.getOpcionVentanaPrincipal() == 1) {
@@ -28,7 +29,7 @@ public class PJuego {
             } else {
                 mantenerJuego();
             }
-            
+
             mjuego.getTurnoo().getJugador1().mostrarMovimientos(mjuego.getTurnoo().getJugador1().getMovimientos(), mjuego.getTurnoo().getJugador1().getNombre());
             mjuego.getTurnoo().getJugador2().mostrarMovimientos(mjuego.getTurnoo().getJugador2().getMovimientos(), mjuego.getTurnoo().getJugador2().getNombre());
         } else if (mjuego.getOpcionVentanaPrincipal() == 2) {
@@ -37,17 +38,19 @@ public class PJuego {
         }
     }
 
+    @Override
     public void configurarJugadorvsPc() {
         mjuego.getTurnoo().getJugador1().setNombre(vjuego.mostrarIngresoNombreJugador(1));
         mjuego.getTurnoo().getJugador1().setTipojugador(TipoJugador.PERSONA);
-        
+
         mjuego.getTurnoo().getJugador2().setNombre("PC");
         mjuego.getTurnoo().getJugador2().setTipojugador(TipoJugador.MAQUINA);
-        
+
         System.out.println("Jugador1: " + mjuego.getTurnoo().getJugador1().getNombre());
         System.out.println("Jugador 2: PC");
     }
 
+    @Override
     public void configurarJugador1vsJugador2() {
         mjuego.setOpcionJugadorElegido(vjuego.mostrarElegirJugador());
         if (mjuego.getOpcionJugadorElegido() == 1) {
@@ -63,6 +66,7 @@ public class PJuego {
         }
     }
 
+    @Override
     public void mantenerJuego() {
         intentos = 0;
         do {
@@ -77,7 +81,7 @@ public class PJuego {
     }
 
     public void seleccionarOpcionSoloSiNoExisteGanador() {
-        if (!mjuego.getValidacionGanador().validarGanador(mjuego.getTablero().getMatriz(), mjuego.getTablero().getSimboloPorDefecto()) && !mjuego.getValidacionGanador().existeEmpate(intentos,mjuego.getTablero().getMatriz(),mjuego.getTablero().getSimboloPorDefecto())) {
+        if (!mjuego.getValidacionGanador().validarGanador(mjuego.getTablero().getMatriz(), mjuego.getTablero().getSimboloPorDefecto()) && !mjuego.getValidacionGanador().existeEmpate(intentos, mjuego.getTablero().getMatriz(), mjuego.getTablero().getSimboloPorDefecto())) {
             this.seleccionarOpciondeJuego();
         }
     }
@@ -101,6 +105,7 @@ public class PJuego {
         }
     }
 
+    @Override
     public void mantenerJuegoPC() {
         intentos = 0;
         do {
@@ -116,13 +121,14 @@ public class PJuego {
     }
 
     public void existeTableroLlenoSegunModelo() {
-        if (mjuego.getValidacionGanador().existeEmpate(intentos,mjuego.getTablero().getMatriz(),mjuego.getTablero().getSimboloPorDefecto())) {
+        if (mjuego.getValidacionGanador().existeEmpate(intentos, mjuego.getTablero().getMatriz(), mjuego.getTablero().getSimboloPorDefecto())) {
             System.out.println("EMPATE");
             System.out.println("FIN DEL JUEGO");
             System.exit(0);
         }
     }
 
+    @Override
     public void posicionOcupada(char[][] matriz) {
         boolean posicionOcupada = true;
         int fila, columna;
@@ -145,4 +151,6 @@ public class PJuego {
         mjuego.getTablero().setFila(fila);
         mjuego.getTablero().setColumna(columna);
     }
+    
+
 }

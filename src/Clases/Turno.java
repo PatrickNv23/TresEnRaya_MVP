@@ -15,6 +15,15 @@ public class Turno {
         return turno;
     }
     
+    public boolean indicarTurnoForm(){
+            if (this.turno) {
+            System.out.println(this.jugador1.getNombre());
+        } else {
+            System.out.println(this.jugador2.getNombre());
+        }
+        return turno;
+    }
+    
     public void cambiarTurno(){
         this.turno = !this.turno;
     }

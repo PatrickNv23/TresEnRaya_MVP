@@ -1,18 +1,28 @@
-
 package Vistas;
 
+import Clases.IVJuego;
+import Clases.IValidacion;
+import Clases.PFormJuego;
+import Clases.PJuego;
+import Clases.ValidacionForm;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+public class VFormJuego extends javax.swing.JFrame implements IVJuego {
 
-public class VFormJuego extends javax.swing.JFrame{
+    private PFormJuego presentador;
+    String jugadorPC = "PC";
+    String jugador1, jugador2;
+    int fila, columna;
 
-    //private PJuego presentador;
     public VFormJuego() {
         initComponents();
+        this.btnRetrocederJugada.setText("Retroceder Jugada");
+        this.btnGuardarPartida.setText("Guardar Partida");
+        this.btnFinalizarPartida.setText("Finalizar Partida");
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -46,15 +56,16 @@ public class VFormJuego extends javax.swing.JFrame{
         txtDosCero = new javax.swing.JTextField();
         txtDosUno = new javax.swing.JTextField();
         txtDosDos = new javax.swing.JTextField();
+        btnEmpezarTurno = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tbpPrincipal.setName("JUEGO");
         tbpPrincipal.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tbpPrincipalAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -86,7 +97,7 @@ public class VFormJuego extends javax.swing.JFrame{
                         .addGroup(pInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnReiniciarPartida)
                             .addComponent(btnIniciarPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         pInicioLayout.setVerticalGroup(
             pInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,7 +135,7 @@ public class VFormJuego extends javax.swing.JFrame{
         pModoJuegoLayout.setHorizontalGroup(
             pModoJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pModoJuegoLayout.createSequentialGroup()
-                .addGap(0, 50, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblModoJuego)
                 .addGap(19, 19, 19))
             .addGroup(pModoJuegoLayout.createSequentialGroup()
@@ -182,7 +193,7 @@ public class VFormJuego extends javax.swing.JFrame{
                         .addGroup(pJugadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnJugador2)
                             .addComponent(btnJugador1))))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         pJugadorLayout.setVerticalGroup(
             pJugadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,8 +223,21 @@ public class VFormJuego extends javax.swing.JFrame{
         btnGuardarPartida.setText("<html><center>Guardar Partida<html>");
 
         btnRetrocederJugada.setText("<html><center>Retroceder Jugada<html>");
+        btnRetrocederJugada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRetrocederJugadaActionPerformed(evt);
+            }
+        });
 
         btnFinalizarTurno.setText("Finalizar Turno");
+
+        txtCeroCero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCeroCeroActionPerformed(evt);
+            }
+        });
+
+        btnEmpezarTurno.setText("empezarTurno");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -260,7 +284,9 @@ public class VFormJuego extends javax.swing.JFrame{
                         .addComponent(txtDosUno, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(btnEmpezarTurno)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnFinalizarTurno)
                 .addGap(67, 67, 67))
         );
@@ -292,7 +318,9 @@ public class VFormJuego extends javax.swing.JFrame{
                     .addComponent(txtDosUno, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDosCero, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnFinalizarTurno)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnFinalizarTurno)
+                    .addComponent(btnEmpezarTurno))
                 .addContainerGap())
         );
 
@@ -321,22 +349,29 @@ public class VFormJuego extends javax.swing.JFrame{
     }//GEN-LAST:event_tbpPrincipalAncestorAdded
 
     private void btnJugadorPcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadorPcActionPerformed
-        // TODO add your handling code here:
+        tbpPrincipal.setSelectedIndex(3);
     }//GEN-LAST:event_btnJugadorPcActionPerformed
 
     private void btnJugador1y2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugador1y2ActionPerformed
         tbpPrincipal.setSelectedIndex(2);
+
     }//GEN-LAST:event_btnJugador1y2ActionPerformed
 
     private void btnJugador1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugador1ActionPerformed
-        String jugador1 = JOptionPane.showInputDialog("Ingrese el nombre del Jugador 1");
-        String jugador2 = JOptionPane.showInputDialog("Ingrese el nombre del Jugador 2");
+
         tbpPrincipal.setSelectedIndex(3);
     }//GEN-LAST:event_btnJugador1ActionPerformed
 
+    public void ingresarJugador1() {
+        this.jugador1 = JOptionPane.showInputDialog("Ingrese el nombre del Jugador 1");
+    }
+
+    public void ingresarJugador2() {
+        this.jugador2 = JOptionPane.showInputDialog("Ingrese el nombre del Jugador 2");
+    }
+
     private void btnJugador2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugador2ActionPerformed
-        String jugador2 = JOptionPane.showInputDialog("Ingrese el nombre del Jugador 2");
-        String jugador1 = JOptionPane.showInputDialog("Ingrese el nombre del Jugador 1");
+
         tbpPrincipal.setSelectedIndex(3);
     }//GEN-LAST:event_btnJugador2ActionPerformed
 
@@ -344,9 +379,48 @@ public class VFormJuego extends javax.swing.JFrame{
 
     }//GEN-LAST:event_btnFinalizarPartidaActionPerformed
 
-   
+    private void txtCeroCeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCeroCeroActionPerformed
+
+    }//GEN-LAST:event_txtCeroCeroActionPerformed
+
+    private void btnRetrocederJugadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocederJugadaActionPerformed
+
+    }//GEN-LAST:event_btnRetrocederJugadaActionPerformed
+
+    @Override
+    public String getJugador1() {
+        return jugador1;
+    }
+
+    @Override
+    public String getJugador2() {
+        return jugador2;
+    }
+
+    public void mostrarNombreTurno(boolean turno, String jugador1, String jugador2) {
+        if (turno) {
+            this.lblCambiarTurno.setText(jugador1);
+        } else {
+            this.lblCambiarTurno.setText(jugador2);
+        }
+    }
+
+    public JLabel getLblCambiarTurno() {
+        return lblCambiarTurno;
+    }
+
+    public void ingresarFila() {
+        this.fila = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero de fila: "));
+
+    }
+
+    public void ingresarColumna() {
+        this.columna = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero de columna:"));
+
+    }
+
     public static void main(String args[]) {
-       
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VFormJuego().setVisible(true);
@@ -354,9 +428,9 @@ public class VFormJuego extends javax.swing.JFrame{
         });
     }
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEmpezarTurno;
     private javax.swing.JButton btnFinalizarPartida;
     private javax.swing.JButton btnFinalizarTurno;
     private javax.swing.JButton btnGuardarPartida;
@@ -387,4 +461,144 @@ public class VFormJuego extends javax.swing.JFrame{
     private javax.swing.JTextField txtUnoDos;
     private javax.swing.JTextField txtUnoUno;
     // End of variables declaration//GEN-END:variables
+
+    //
+    public void setPresentador(PFormJuego p) {
+        this.presentador = p;
+        this.btnIniciarPartida.addActionListener(p);
+        this.btnReiniciarPartida.addActionListener(p);
+        this.btnJugadorPc.addActionListener(p);
+        this.btnJugador1y2.addActionListener(p);
+        this.btnJugador1.addActionListener(p);
+        this.btnJugador2.addActionListener(p);
+        this.btnEmpezarTurno.addActionListener(p);
+        this.btnFinalizarTurno.addActionListener(p);
+        this.btnRetrocederJugada.addActionListener(p);
+        this.btnGuardarPartida.addActionListener(p);
+        this.btnFinalizarPartida.addActionListener(p);
+    }
+
+    public int getFila() {
+        return fila;
+    }
+
+    public int getColumna() {
+        return columna;
+    }
+
+    @Override
+    public void iniciar() {
+        presentador.presentar();
+        this.setVisible(true);
+        pack();
+        this.setLocationRelativeTo(null);
+    }
+
+    @Override
+    public String mostrarReanudarPartida() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int mostrarSeleccionarModoJuego() {
+        int opcion = 1;
+        tbpPrincipal.setSelectedIndex(1);
+        return opcion;
+    }
+
+    @Override
+    public int mostrarElegirJugador() {
+        int opcion = 2;
+        tbpPrincipal.setSelectedIndex(2);
+        return opcion;
+    }
+
+    public void obtenerTablero(char[][] matriz) {
+        this.txtCeroCero.setText(String.valueOf(matriz[0][0]));
+        this.txtCeroUno.setText(String.valueOf(matriz[0][1]));
+        this.txtCeroDos.setText(String.valueOf(matriz[0][2]));
+        this.txtUnoCero.setText(String.valueOf(matriz[1][0]));
+        this.txtUnoUno.setText(String.valueOf(matriz[1][1]));
+        this.txtUnoDos.setText(String.valueOf(matriz[1][2]));
+        this.txtDosCero.setText(String.valueOf(matriz[2][0]));
+        this.txtDosUno.setText(String.valueOf(matriz[2][1]));
+        this.txtDosDos.setText(String.valueOf(matriz[2][2]));
+    }
+
+    public void mostrarGanadorr(boolean turno, String jugador1, String jugador2) {
+        turno = !turno;
+        if (turno) {
+
+            JOptionPane.showMessageDialog(null, "El ganador es: " + jugador1);
+        } else {
+            JOptionPane.showMessageDialog(null, "El ganador es: " + jugador2);
+        }
+
+    }
+
+    @Override
+    public String mostrarIngresoNombreJugador(int opcion) {
+        String jugador = JOptionPane.showInputDialog("Ingrese el nombre del Jugador " + opcion + ": ");
+        tbpPrincipal.setSelectedIndex(3);
+        return jugador;
+    }
+
+    @Override
+    public void mostrarTablero() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int mostrarOpcionesdeJuego() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int mostrarIngresoFilas() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int mostrarIngresoColumnas() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String mostrarGanador(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void mostrarEmpate() {
+        JOptionPane.showMessageDialog(null, "EMPATE - Gracias por Jugar");
+    }
+
+    @Override
+    public String mostrarGuardarPartida() {
+        // String partida = JOptionPane.showInputDialog("Ingrese el nombre de la partida: ");
+        //return partida;
+        IValidacion validacion = new ValidacionForm();
+        return validacion.validarString();
+    }
+
+    @Override
+    public int mostrarVentanaPrincipal() {
+        int opcion = 1;
+        this.tbpPrincipal.setSelectedIndex(0);
+        return opcion;
+    }
+
+    @Override
+    public int mostrarOpcionesDespuesGuardado() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getJugadorPc() {
+        return this.jugadorPC;
+    }
+
+    @Override
+    public void setPresentador(PJuego p) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

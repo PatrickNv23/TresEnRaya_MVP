@@ -1,15 +1,12 @@
 
 package Vistas;
 
-
 public class VPrincipal extends javax.swing.JFrame {
 
  
     public VPrincipal() {
         initComponents();
     }
-
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -24,6 +21,11 @@ public class VPrincipal extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
         btnIniciarPartida.setText("INICIAR PARTIDA");
+        btnIniciarPartida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarPartidaActionPerformed(evt);
+            }
+        });
 
         btnReanudarPartida.setText("REANUDAR PARTIDA");
 
@@ -73,6 +75,12 @@ public class VPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIniciarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarPartidaActionPerformed
+        // TODO add your handling code here:
+        ModoJuego vista = new ModoJuego();
+        
+    }//GEN-LAST:event_btnIniciarPartidaActionPerformed
 
 
     public static void main(String args[]) {

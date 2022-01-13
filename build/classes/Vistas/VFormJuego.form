@@ -71,7 +71,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="83" max="32767" attributes="0"/>
+                      <EmptySpace pref="44" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -212,7 +212,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="78" max="32767" attributes="0"/>
+                      <EmptySpace pref="27" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -328,6 +328,8 @@
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnEmpezarTurno" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnFinalizarTurno" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
@@ -367,7 +369,10 @@
                           <Component id="txtDosCero" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnFinalizarTurno" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnFinalizarTurno" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnEmpezarTurno" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -407,6 +412,9 @@
                   <Connection code="&quot;&lt;html&gt;&lt;center&gt;Retroceder Jugada&lt;html&gt;&quot;" type="code"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRetrocederJugadaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnFinalizarTurno">
               <Properties>
@@ -414,6 +422,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtCeroCero">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCeroCeroActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtCeroUno">
             </Component>
@@ -430,6 +441,11 @@
             <Component class="javax.swing.JTextField" name="txtDosUno">
             </Component>
             <Component class="javax.swing.JTextField" name="txtDosDos">
+            </Component>
+            <Component class="javax.swing.JButton" name="btnEmpezarTurno">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="empezarTurno"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
